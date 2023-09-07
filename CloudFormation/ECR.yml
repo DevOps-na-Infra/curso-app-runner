@@ -1,0 +1,10 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: Criacao do ECR.
+
+Resources:
+
+  ECR:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: devops-na-infra

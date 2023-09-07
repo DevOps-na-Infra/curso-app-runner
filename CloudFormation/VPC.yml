@@ -1,0 +1,96 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: Criacao da VPC e seus componentes.
+
+Resources:
+
+# Criacao da VPC
+
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties: 
+      CidrBlock: 10.128.0.0/23
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      InstanceTenancy: default
+      Tags: 
+        - Key: Name
+          Value: VPC-DEVOPSNAINFRA
+
+# Criacao das Subnets Publica e Privada
+
+  PublicSubnet:  
+    Type: AWS::EC2::Subnet
+    Properties: 
+      AvailabilityZone: us-east-1a
+      CidrBlock: 10.128.0.0/24
+      MapPublicIpOnLaunch: true
+      VpcId: !Ref VPC
+      Tags: 
+        - Key: Name
+          Value: SUBNET-PUBLICA
+
+  PrivateSubnet:
+    Type: AWS::EC2::Subnet
+    Properties: 
+      AvailabilityZone: us-east-1a
+      CidrBlock: 10.128.1.0/24
+      MapPublicIpOnLaunch: false
+      VpcId: !Ref VPC
+      Tags: 
+        - Key: Name
+          Value: SUBNET-PRIVADA
+
+# Criacao do Internet Gateway e Attach em VPC
+  
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+      - Key: Name
+        Value: IGW-DEVOPSNAINFRA
+  
+  AttachInternetGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties: 
+      InternetGatewayId: !Ref InternetGateway
+      VpcId: !Ref VPC
+
+# Criacao da Route Table Publica
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+      - Key: Name
+        Value: RTB-PUBLICA
+
+  ConfPublicRouteTable:
+    Type: AWS::EC2::Route
+    Properties: 
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+  
+  ConfPublicSubnetAssociations:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: 
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet
+
+# Criacao da Route Table Privada
+
+  PrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+      - Key: Name
+        Value: RTB-PRIVADA
+
+  ConfPrivateSubnetAssociations:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: 
+      RouteTableId: !Ref PrivateRouteTable
+      SubnetId: !Ref PrivateSubnet
