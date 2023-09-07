@@ -1,0 +1,53 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: Criacao do AppRunner.
+
+Resources:
+
+  IAMAppRunner:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: ROLE-APPRUNNER-ECR
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: "Allow"
+            Principal:
+              Service:
+                - "ecs-tasks.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Path: "/"
+      Policies:
+        -
+          PolicyName: POLICY-APPRUNNER-RCR
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Action:
+                  - "ecr:GetDownloadUrlForLayer"
+                  - "ecr:BatchGetImage"
+                  - "ecr:DescribeImages"
+                  - "ecr:GetAuthorizationToken"
+                  - "ecr:BatchCheckLayerAvailability"
+                Resource: "*"
+
+  AppRunnerECR:
+    Type: AWS::AppRunner::Service
+    Properties:
+      ServiceName: app-devopsnainfra
+      SourceConfiguration: 
+        AuthenticationConfiguration:
+          AccessRoleArn: !GetAtt IAMAppRunner.Arn
+        AutoDeploymentsEnabled: false
+        ImageRepository:
+          ImageIdentifier: ""
+          ImageRepositoryType: ECR
+          ImageConfiguration:
+            Port: 80
+      InstanceConfiguration:
+        Cpu: 0.25 vCPU
+        Memory: 0.5 GB
