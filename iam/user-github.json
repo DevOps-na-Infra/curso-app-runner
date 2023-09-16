@@ -1,0 +1,36 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "IAM",
+        "Action": [
+          "iam:PassRole"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      },
+      {
+        "Sid": "ECR",
+        "Action": [
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:CompleteLayerUpload",
+          "ecr:GetAuthorizationToken",
+          "ecr:InitiateLayerUpload",
+          "ecr:PutImage",
+          "ecr:UploadLayerPart"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      },
+      {
+        "Sid": "AppRunner",
+        "Action": [
+          "apprunner:DescribeService",
+          "apprunner:ListServices",
+          "apprunner:StartDeployment"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      }
+    ]
+  }
