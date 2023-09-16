@@ -7,4 +7,4 @@ Resources:
   ECR:
     Type: AWS::ECR::Repository
     Properties:
-      RepositoryName: devops-na-infra
+      RepositoryName: devopsnainfra
