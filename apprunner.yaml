@@ -1,5 +1,5 @@
 version: 1.0
-runtime: "Node.js 16"
+runtime: nodejs16.x
 build:
   commands:
     build:
