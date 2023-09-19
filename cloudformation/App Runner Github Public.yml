@@ -4,38 +4,7 @@ Description: Criacao do AppRunner.
 
 Resources:
 
-# IAM Roles
-
-  IAMAppRunner:
-    Type: AWS::IAM::Role
-    Properties:
-      RoleName: ROLE-APPRUNNER
-      AssumeRolePolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          -
-            Effect: "Allow"
-            Principal:
-              Service:
-                - "build.apprunner.amazonaws.com"
-            Action:
-              - "sts:AssumeRole"
-      Path: "/"
-      Policies:
-        -
-          PolicyName: POLICY-APPRUNNER
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              -
-                Effect: "Allow"
-                Action:
-                  - "ecr:GetDownloadUrlForLayer"
-                  - "ecr:BatchGetImage"
-                  - "ecr:DescribeImages"
-                  - "ecr:GetAuthorizationToken"
-                  - "ecr:BatchCheckLayerAvailability"
-                Resource: "*"
+# IAM Role
 
   IAMTaskAppRunner:
     Type: AWS::IAM::Role
@@ -67,19 +36,24 @@ Resources:
 
 # App Runner
 
-  AppRunnerECR:
+  AppRunnerGithub:
     Type: AWS::AppRunner::Service
     Properties:
       ServiceName: DEVOPS-NA-INFRA
       SourceConfiguration: 
         AuthenticationConfiguration:
-          AccessRoleArn: !GetAtt IAMAppRunner.Arn
+          ConnectionArn: arn:aws:apprunner:us-east-1:489732776903:connection/Connection/2df260bba6ac438f9152cce875351129
         AutoDeploymentsEnabled: true
-        ImageRepository:
-          ImageIdentifier: 489732776903.dkr.ecr.us-east-1.amazonaws.com/devopsnainfra:latest
-          ImageRepositoryType: ECR
-          ImageConfiguration:
-            Port: 80
+        CodeRepository:
+          RepositoryUrl: "https://github.com/DevOps-na-Infra/orquestracao-apprunner"
+          SourceCodeVersion:
+            Type: BRANCH
+            Value: main
+          CodeConfiguration:
+            ConfigurationSource: REPOSITORY
+            CodeConfigurationValues:
+              Runtime: NODEJS_16
+              Port: 80
       InstanceConfiguration:
         Cpu: 1 vCPU
         Memory: 2 GB

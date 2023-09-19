@@ -4,6 +4,8 @@ Description: Criacao do AppRunner.
 
 Resources:
 
+# IAM Roles
+
   IAMAppRunner:
     Type: AWS::IAM::Role
     Properties:
@@ -63,6 +65,8 @@ Resources:
                   - "s3:ListAllMyBuckets"
                 Resource: "*"
 
+# Endpoint para App Runner Private
+
   EndpointAppRunner:
     Type: AWS::EC2::VPCEndpoint
     Properties:
@@ -74,6 +78,8 @@ Resources:
         - subnet-04291a330fc70dc7c
       VpcEndpointType: Interface
       VpcId: vpc-04372222deb6f3e13
+
+# App Runner
 
   AppRunnerECR:
     Type: AWS::AppRunner::Service
@@ -102,6 +108,8 @@ Resources:
       NetworkConfiguration:
         IngressConfiguration:
           IsPubliclyAccessible: False
+
+# Conectando o Ingress Interno no Endpoint
 
   AppRunnerPrivateEndpoint:      
     Type: AWS::AppRunner::VpcIngressConnection
