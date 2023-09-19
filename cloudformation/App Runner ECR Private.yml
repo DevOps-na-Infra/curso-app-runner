@@ -75,16 +75,6 @@ Resources:
       VpcEndpointType: Interface
       VpcId: vpc-04372222deb6f3e13
 
-#  AppRunnerConnector:
-#    Type: AWS::AppRunner::VpcConnector
-#    Properties:
-#      VpcConnectorName: APPRUNNER-ENDPOINT
-#      Subnets:
-#        - subnet-04291a330fc70dc7c
-#      SecurityGroups:
-#        - sg-066d9f1a7388308da
-#      ConnectorArn: !GetAtt EndpointAppRunner.Id
-
   AppRunnerECR:
     Type: AWS::AppRunner::Service
     Properties:
