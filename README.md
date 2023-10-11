@@ -25,7 +25,6 @@ Entre em contato comigo!
 * E-mail: daniel.fulgido@outlook.com.br
 
 ---
-<br/>
 Este curso é feito para você e por você que deseja executar as suas aplicações de uma maneira mais simplificada na AWS, o meu intuito é ir direto ao ponto para você não perder tempo e executar a sua demanda o mais rápido possível!
 <br/>
 <br/>
