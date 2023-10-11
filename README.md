@@ -15,7 +15,7 @@ Aprenda a executar os seus códigos sem infraestrutura com o App Runner, nele é
 ## Roadmap de atualização do curso
 Capítulo | Mês de lançamento
 :---: | :---:
-Pipeliines manuais | 11/2023
+Pipelines manuais | 11/2023
 Observabilidade com X-Ray | 12/2023
 WAF | 01/2024
 
