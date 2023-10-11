@@ -90,7 +90,7 @@ Resources:
           AccessRoleArn: !GetAtt IAMAppRunner.Arn
         AutoDeploymentsEnabled: true
         ImageRepository:
-          ImageIdentifier: 489732776903.dkr.ecr.us-east-1.amazonaws.com/devopsnainfra:latest
+          ImageIdentifier: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/devopsnainfra:latest
           ImageRepositoryType: ECR
           ImageConfiguration:
             Port: 80

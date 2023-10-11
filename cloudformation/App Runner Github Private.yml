@@ -87,7 +87,7 @@ Resources:
       ServiceName: DEVOPS-NA-INFRA
       SourceConfiguration: 
         AuthenticationConfiguration:
-          ConnectionArn: arn:aws:apprunner:us-east-1:489732776903:connection/Connection/2df260bba6ac438f9152cce875351129
+          ConnectionArn: !Sub arn:aws:apprunner:${AWS::Region}:${AWS::AccountId}:connection/Connection/2df260bba6ac438f9152cce875351129
         AutoDeploymentsEnabled: true
         CodeRepository:
           RepositoryUrl: "https://github.com/DevOps-na-Infra/orquestracao-apprunner"
