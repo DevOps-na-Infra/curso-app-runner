@@ -1,7 +1,7 @@
 # ORQUESTRAÇÃO DE CONTÊINERES E CÓDIGOS NO AWS APP RUNNER
 
 ## Link do curso na Udemy
-https://www.udemy.com/course/orquestracao-de-conteineres-e-codigos-no-aws-app-runner/
+https://www.udemy.com/course/orquestracao-de-conteineres-e-codigos-no-aws-app-runner/?referralCode=FCFB99559CA24338B832
 
 ## Introdução
 Este curso é direcionado para você que precisa executar o deploy da sua aplicação de uma maneira simplificada e rápida com as boas práticas da AWS.
