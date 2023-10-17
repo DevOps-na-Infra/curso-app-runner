@@ -1,36 +1,37 @@
 {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Sid": "IAM",
-        "Action": [
-          "iam:PassRole"
-        ],
-        "Effect": "Allow",
-        "Resource": "*"
-      },
-      {
-        "Sid": "ECR",
-        "Action": [
-          "ecr:BatchCheckLayerAvailability",
-          "ecr:CompleteLayerUpload",
-          "ecr:GetAuthorizationToken",
-          "ecr:InitiateLayerUpload",
-          "ecr:PutImage",
-          "ecr:UploadLayerPart"
-        ],
-        "Effect": "Allow",
-        "Resource": "*"
-      },
-      {
-        "Sid": "AppRunner",
-        "Action": [
-          "apprunner:DescribeService",
-          "apprunner:ListServices",
-          "apprunner:StartDeployment"
-        ],
-        "Effect": "Allow",
-        "Resource": "*"
-      }
-    ]
-  }
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "IAM",
+      "Action": [
+        "iam:PassRole"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    },
+    {
+      "Sid": "App Runner",
+      "Action": [
+        "apprunner:CreateService",
+        "apprunner:DescribeService",
+        "apprunner:ListServices",
+        "apprunner:TagResource",
+        "apprunner:UpdateService"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    },
+    {
+      "Sid": "ECR",
+      "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:BatchGetImage",
+        "ecr:DescribeImages",
+        "ecr:GetAuthorizationToken",
+        "ecr:GetDownloadUrlForLayer"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
