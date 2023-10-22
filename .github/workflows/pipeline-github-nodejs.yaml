@@ -10,20 +10,24 @@ jobs:
 #    permissions:
 #      id-token: write
 #      contents: read
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
     
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
           
-      - name: Deploy to App Runner
-        id: deploy-apprunner
-        uses: awslabs/amazon-app-runner-deploy@main
-        env:
-          SERVER_PORT: 80
-          SECRET_ENV: secret_env
+    - name: Deploy to App Runner
+      id: deploy-apprunner
+      uses: awslabs/amazon-app-runner-deploy@main
+      env:
+        SERVER_PORT: 80
+        SECRET_ENV: secret_env
         with:
           service: DEVOPS-NA-INFRA 
           source-connection-arn: ${{ secrets.AWS_CONNECTION_SOURCE_ARN }}
@@ -32,7 +36,7 @@ jobs:
           runtime: NODEJS_16
           build-command: npm install
           start-command: npm start
-          port: 18000
+          port: 80
           region: ${{ secrets.AWS_REGION }}
           cpu : 1
           memory : 2
