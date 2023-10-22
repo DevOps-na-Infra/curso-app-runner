@@ -10,7 +10,7 @@
       "Resource": "*"
     },
     {
-      "Sid": "App Runner",
+      "Sid": "AppRunner",
       "Action": [
         "apprunner:CreateService",
         "apprunner:DescribeService",
