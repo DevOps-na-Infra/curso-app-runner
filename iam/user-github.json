@@ -29,7 +29,11 @@
         "ecr:BatchGetImage",
         "ecr:DescribeImages",
         "ecr:GetAuthorizationToken",
-        "ecr:GetDownloadUrlForLayer"
+        "ecr:UploadLayerPart",
+        "ecr:PutImage",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:CompleteLayerUpload",
+        "ecr:InitiateLayerUpload"
       ],
       "Effect": "Allow",
       "Resource": "*"
