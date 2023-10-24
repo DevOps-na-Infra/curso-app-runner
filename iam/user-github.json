@@ -16,6 +16,7 @@
         "apprunner:DescribeService",
         "apprunner:ListServices",
         "apprunner:TagResource",
+        "apprunner:StartDeployment",
         "apprunner:UpdateService"
       ],
       "Effect": "Allow",
