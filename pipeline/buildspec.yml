@@ -1,0 +1,32 @@
+version: 0.2
+env:
+  variables:
+    CONTAINER_NAME: "NOME_DA_APLICAÇÃO"
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - AWS_ACCOUNT_ID=954019878102
+      - AWS_DEFAULT_REGION=us-east-1
+      - COMMIT_ID=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION)      
+      - IMAGE_REPO_NAME=[NOME_DO_ECR]
+      - IMAGE_TAG=Latest
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG . -f dev.Dockerfile
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$COMMIT_ID
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$COMMIT_ID
+      - echo Writing image definitions file...
+      - printf '[{"name":"ECS-%s-DEV","imageUri":"%s"}]' $CONTAINER_NAME $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$COMMIT_ID > imagedefinitions.json
+      - cat imagedefinitions.json 
+artifacts:
+    files: 
+        - 'imagedefinitions.json'
