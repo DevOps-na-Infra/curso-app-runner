@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
 
 env:
-  ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+  ECR_REPOSITORY: devopsnainfra
 
 permissions:
   contents: read
