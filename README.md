@@ -16,6 +16,7 @@ Aprenda a executar os seus códigos sem infraestrutura com o App Runner, nele é
 Capítulo | Mês de lançamento | Status
 :---: | :---: | :---:
 Pipelines manuais | 11/2023 | :construction_worker:
+AWS Copilot | | 12/2023 | :construction_worker:
 Observabilidade com X-Ray | 12/2023 | :construction_worker:
 WAF | 01/2024 | :construction_worker:
 
