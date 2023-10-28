@@ -20,7 +20,9 @@ Observabilidade com X-Ray | 12/2023 | :construction_worker:
 WAF | 01/2024 | :construction_worker:
 
 Legenda:
+
 :construction_worker: = Trabalhando
+<br>
 :white_check_mark: = Feito
 
 ## Surgiu alguma dúvida, reclamação ou sugestão?
