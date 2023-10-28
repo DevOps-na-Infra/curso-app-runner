@@ -1,4 +1,4 @@
-name: Deploy to AppRunner
+name: Deploy ECR to App Runner 
 
 on:
   push:
