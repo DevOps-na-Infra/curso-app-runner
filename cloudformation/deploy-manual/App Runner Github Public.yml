@@ -1,0 +1,67 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: Criacao do AppRunner.
+
+Resources:
+
+# IAM Role
+
+  IAMTaskAppRunner:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: ROLE-TASK-APPRUNNER
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: "Allow"
+            Principal:
+              Service:
+                - "tasks.apprunner.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Path: "/"
+      Policies:
+        -
+          PolicyName: POLICY-TASK-APPRUNNER
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Action:
+                  - "s3:GetObject"
+                  - "s3:ListAllMyBuckets"
+                Resource: "*"
+
+# App Runner
+
+  AppRunnerGithub:
+    Type: AWS::AppRunner::Service
+    Properties:
+      ServiceName: DEVOPS-NA-INFRA
+      SourceConfiguration: 
+        AuthenticationConfiguration:
+          ConnectionArn: !Sub arn:aws:apprunner:${AWS::Region}:${AWS::AccountId}:connection/Connection/2df260bba6ac438f9152cce875351129
+        AutoDeploymentsEnabled: false
+        CodeRepository:
+          RepositoryUrl: "https://github.com/DevOps-na-Infra/orquestracao-apprunner"
+          SourceCodeVersion:
+            Type: BRANCH
+            Value: main
+          CodeConfiguration:
+            ConfigurationSource: REPOSITORY
+            CodeConfigurationValues:
+              Runtime: NODEJS_16
+              Port: 80
+      InstanceConfiguration:
+        Cpu: 1 vCPU
+        Memory: 2 GB
+        InstanceRoleArn: !GetAtt IAMTaskAppRunner.Arn
+      HealthCheckConfiguration:
+        Protocol: HTTP
+        Path: "/"
+        Timeout: 2
+        Interval: 5
+        UnhealthyThreshold: 5
+        HealthyThreshold: 1

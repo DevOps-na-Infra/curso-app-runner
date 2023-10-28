@@ -1,0 +1,93 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: Criacao do AppRunner.
+
+Resources:
+
+# IAM Roles
+
+  IAMAppRunner:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: ROLE-APPRUNNER
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: "Allow"
+            Principal:
+              Service:
+                - "build.apprunner.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Path: "/"
+      Policies:
+        -
+          PolicyName: POLICY-APPRUNNER
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Action:
+                  - "ecr:GetDownloadUrlForLayer"
+                  - "ecr:BatchGetImage"
+                  - "ecr:DescribeImages"
+                  - "ecr:GetAuthorizationToken"
+                  - "ecr:BatchCheckLayerAvailability"
+                Resource: "*"
+
+  IAMTaskAppRunner:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: ROLE-TASK-APPRUNNER
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: "Allow"
+            Principal:
+              Service:
+                - "tasks.apprunner.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Path: "/"
+      Policies:
+        -
+          PolicyName: POLICY-TASK-APPRUNNER
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Action:
+                  - "s3:GetObject"
+                  - "s3:ListAllMyBuckets"
+                Resource: "*"
+
+# App Runner
+
+  AppRunnerECR:
+    Type: AWS::AppRunner::Service
+    Properties:
+      ServiceName: DEVOPS-NA-INFRA
+      SourceConfiguration: 
+        AuthenticationConfiguration:
+          AccessRoleArn: !GetAtt IAMAppRunner.Arn
+        AutoDeploymentsEnabled: false
+        ImageRepository:
+          ImageIdentifier: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/devopsnainfra:latest
+          ImageRepositoryType: ECR
+          ImageConfiguration:
+            Port: 80
+      InstanceConfiguration:
+        Cpu: 1 vCPU
+        Memory: 2 GB
+        InstanceRoleArn: !GetAtt IAMTaskAppRunner.Arn
+      HealthCheckConfiguration:
+        Protocol: HTTP
+        Path: "/"
+        Timeout: 2
+        Interval: 5
+        UnhealthyThreshold: 5
+        HealthyThreshold: 1
