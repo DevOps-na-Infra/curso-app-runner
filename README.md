@@ -13,11 +13,15 @@ Neste curso há uma parte dedicada aos contêineres, nele você aprenderá a exe
 Aprenda a executar os seus códigos sem infraestrutura com o App Runner, nele é possível realizar o deploy do seu código com poucos comandos na pipeline conhecidos pelos desenvolvedores.
 
 ## Roadmap de atualização do curso
-Capítulo | Mês de lançamento
-:---: | :---:
-Pipelines manuais | 11/2023
-Observabilidade com X-Ray | 12/2023
-WAF | 01/2024
+Capítulo | Mês de lançamento | Status
+:---: | :---: | :---:
+Pipelines manuais | 11/2023 | :construction_worker:
+Observabilidade com X-Ray | 12/2023 | :construction_worker:
+WAF | 01/2024 | :construction_worker:
+
+Legenda:
+:construction_worker: = Trabalhando
+:white_check_mark: = Feito
 
 ## Surgiu alguma dúvida, reclamação ou sugestão?
 Entre em contato comigo!
